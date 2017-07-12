@@ -14,7 +14,6 @@ class Quiz {
     var correctQuestions: Int
     var questionsAsked: Int
     var indexOfSelectedQuestion: Int = 0
-    var randomQuestions: [Question] = []
     var questions: [Question] = [
     
     Question(text: "What can JSON be best represented by in Swift?", answer1: "Dictionary", answer2: "Array", answer3: "Object", answer4: "Optional", correctAnswer: "Dictionary", hasBeenAsked: false),

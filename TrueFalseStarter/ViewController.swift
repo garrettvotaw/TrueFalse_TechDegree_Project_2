@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     
     var indexOfSelectedQuestion: Int = 0
     var gameSound: SystemSoundID = 0
-    let quiz = Quiz(questionsPerRound: 7, correctQuestions: 0, questionsAsked: 0)
+    var quiz = Quiz(questionsPerRound: 10, correctQuestions: 0, questionsAsked: 0)
     
     
     @IBOutlet weak var questionField: UILabel!
@@ -43,16 +43,20 @@ class ViewController: UIViewController {
 //        let questionDictionary = trivia[indexOfSelectedQuestion]
 //        questionField.text = questionDictionary["Question"]
 //        playAgainButton.isHidden = true
-        playAgainButton.isHidden = true
-        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: quiz.questions.count)
-        var question = quiz.questions[indexOfSelectedQuestion]
-        question.hasBeenAsked = true
-        questionField.text = question.text
-        buttonOne.setTitle(question.answer1, for: .normal)
-        buttonTwo.setTitle(question.answer2, for: .normal)
-        buttonThree.setTitle(question.answer3, for: .normal)
-        buttonFour.setTitle(question.answer4, for: .normal)
         
+        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: quiz.questions.count)
+        let question = quiz.questions[indexOfSelectedQuestion]
+        if question.hasBeenAsked == false {
+            questionField.text = question.text
+            buttonOne.setTitle(question.answer1, for: .normal)
+            buttonTwo.setTitle(question.answer2, for: .normal)
+            buttonThree.setTitle(question.answer3, for: .normal)
+            buttonFour.setTitle(question.answer4, for: .normal)
+            quiz.questions[indexOfSelectedQuestion].hasBeenAsked = true
+        } else {
+            print ("This question has already been asked you need to handle it and ask another question")
+            nextRound()
+        }
         
     }
     
@@ -100,7 +104,6 @@ class ViewController: UIViewController {
         } else {
             questionField.text = "NOPE!"
         }
-        quiz.questions.remove(at: indexOfSelectedQuestion)
         loadNextRoundWithDelay(seconds: 2)
     }
     
@@ -115,6 +118,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func playAgain() {
+        // Set all the questions to be Askable again
+        for var question in quiz.questions {
+            question.hasBeenAsked = false
+        }
         // Show the answer buttons
         buttonOne.isHidden = false
         buttonTwo.isHidden = false
@@ -123,7 +130,7 @@ class ViewController: UIViewController {
         playAgainButton.isHidden = true
         quiz.questionsAsked = 0
         quiz.correctQuestions = 0
-        nextRound()
+        displayQuestion()
     }
     
 
