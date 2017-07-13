@@ -36,14 +36,7 @@ class ViewController: UIViewController {
     
     
     
-    
-    
     func displayQuestion() {
-//        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: trivia.count)
-//        let questionDictionary = trivia[indexOfSelectedQuestion]
-//        questionField.text = questionDictionary["Question"]
-//        playAgainButton.isHidden = true
-        
         indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: quiz.questions.count)
         let question = quiz.questions[indexOfSelectedQuestion]
         if question.hasBeenAsked == false {
@@ -53,22 +46,21 @@ class ViewController: UIViewController {
             buttonThree.setTitle(question.answer3, for: .normal)
             buttonFour.setTitle(question.answer4, for: .normal)
             quiz.questions[indexOfSelectedQuestion].hasBeenAsked = true
+            if question.answer4 == nil {
+                buttonFour.isHidden = true
+                
+            } else {
+                buttonFour.isHidden = false
+            }
         } else {
-            print ("This question has already been asked you need to handle it and ask another question")
+            print ("The randomly chosen question has already been asked. Prepare to receive a new random question")
             nextRound()
         }
+        
         
     }
     
     func displayScore() {
-//        // Hide the answer buttons
-//        trueButton.isHidden = true
-//        falseButton.isHidden = true
-//        
-//        // Display play again button
-//        playAgainButton.isHidden = false
-//        
-//        questionField.text = "Way to go!\nYou got \(correctQuestions) out of \(questionsPerRound) correct!"
         buttonOne.isHidden = true
         buttonTwo.isHidden = true
         buttonThree.isHidden = true
@@ -79,20 +71,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func checkAnswer(_ sender: UIButton) {
-//        // Increment the questions asked counter
-//        questionsAsked += 1
-//        
-//        let selectedQuestionDict = trivia[indexOfSelectedQuestion]
-//        let correctAnswer = selectedQuestionDict["Answer"]
-//        
-//        if (sender === trueButton &&  correctAnswer == "True") || (sender === falseButton && correctAnswer == "False") {
-//            correctQuestions += 1
-//            questionField.text = "Correct!"
-//        } else {
-//            questionField.text = "Sorry, wrong answer!"
-//        }
-//        
-//        loadNextRoundWithDelay(seconds: 2)
         
         quiz.questionsAsked += 1
         let currentQuestion = quiz.questions[indexOfSelectedQuestion]
@@ -119,9 +97,7 @@ class ViewController: UIViewController {
     
     @IBAction func playAgain() {
         // Set all the questions to be Askable again
-        for var question in quiz.questions {
-            question.hasBeenAsked = false
-        }
+        quiz.resetQuestions()
         // Show the answer buttons
         buttonOne.isHidden = false
         buttonTwo.isHidden = false

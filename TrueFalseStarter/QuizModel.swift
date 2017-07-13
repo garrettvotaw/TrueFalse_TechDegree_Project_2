@@ -13,7 +13,6 @@ class Quiz {
     let questionsPerRound: Int
     var correctQuestions: Int
     var questionsAsked: Int
-    var indexOfSelectedQuestion: Int = 0
     var questions: [Question] = [
     
     Question(text: "What can JSON be best represented by in Swift?", answer1: "Dictionary", answer2: "Array", answer3: "Object", answer4: "Optional", correctAnswer: "Dictionary", hasBeenAsked: false),
@@ -42,6 +41,17 @@ class Quiz {
         self.questionsPerRound = questionsPerRound
         self.correctQuestions = correctQuestions
         self.questionsAsked = questionsAsked
+    }
+    
+    
+    
+    //This function resets the has been asked property on all Questions in the array. (Call this when resetting the game)
+    func resetQuestions() {
+        for question in questions {
+            if question.hasBeenAsked {
+                question.hasBeenAsked = false
+            }
+        }
     }
 }
 
