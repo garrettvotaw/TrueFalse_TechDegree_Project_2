@@ -12,6 +12,7 @@ import AudioToolbox
 
 class ViewController: UIViewController {
     
+    //Colors
     let buttonColorBlue = UIColor(colorLiteralRed: 16.0/255.0, green: 171.0/255.0, blue: 214.0/255.0, alpha: 1.0)
     let correctAnswerColor = UIColor(colorLiteralRed: 93.0/255.0, green: 190.0/255.0, blue: 90.0/255.0, alpha: 1.0)
     let incorrectAnswerColor = UIColor(colorLiteralRed: 221.0/255.0, green: 78.0/255.0, blue: 74.0/255.0, alpha: 1.0)
@@ -38,6 +39,7 @@ class ViewController: UIViewController {
         displayQuestion()
         playAgainButton.isHidden = true
     }
+
     
     
     
@@ -61,6 +63,8 @@ class ViewController: UIViewController {
             print ("The randomly chosen question has already been asked. Prepare to receive a new random question")
             nextRound()
         }
+        nextQuestionButton.isEnabled = false
+        nextQuestionButton.alpha = 0.5
     }
     
     
@@ -70,9 +74,12 @@ class ViewController: UIViewController {
         buttonTwo.isHidden = true
         buttonThree.isHidden = true
         buttonFour.isHidden = true
-        
         playAgainButton.isHidden = false
-        questionField.text = "You correctly answered \(quiz.correctQuestions) out of \(quiz.questionsPerRound)"
+        if quiz.correctQuestions < quiz.questionsPerRound {
+            questionField.text = "You correctly answered \(quiz.correctQuestions) out of \(quiz.questionsPerRound), but there is still room for improvement!"
+        } else if quiz.correctQuestions == quiz.questionsPerRound {
+            questionField.text = "Wow! You answered all the questions correctly! You must be a programmer!"
+        }
     }
     
     
@@ -86,9 +93,11 @@ class ViewController: UIViewController {
             questionField.text = "Great job, you got that one right!"
             sender.backgroundColor = correctAnswerColor
         } else {
-            questionField.text = "I'm sorry but the answer was: \"\(correctAnswer)\""
+            questionField.text = "I'm sorry but the correct answer is: \"\(correctAnswer)\""
             sender.backgroundColor = incorrectAnswerColor
         }
+        nextQuestionButton.isEnabled = true
+        nextQuestionButton.alpha = 1.0
     }
     
     
@@ -138,4 +147,5 @@ class ViewController: UIViewController {
         AudioServicesPlaySystemSound(gameSound)
     }
 }
+
 

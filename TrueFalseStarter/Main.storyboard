@@ -139,10 +139,10 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="W4J-qI-7Vs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="0At-wo-hsG"/>
                             <constraint firstItem="K17-uy-MvB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1Af-RW-cf7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="W4J-qI-7Vs" secondAttribute="trailing" constant="20" id="7Ud-62-WR5"/>
                             <constraint firstItem="W4J-qI-7Vs" firstAttribute="top" secondItem="45L-a8-LBd" secondAttribute="bottom" constant="28" id="AW3-q6-6UX"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="W4J-qI-7Vs" secondAttribute="trailing" constant="20" id="IsS-GO-4Ct"/>
+                            <constraint firstItem="W4J-qI-7Vs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="Bcl-EJ-1zz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="K17-uy-MvB" secondAttribute="trailing" constant="20" id="JgN-qe-Haw"/>
                             <constraint firstItem="45L-a8-LBd" firstAttribute="top" secondItem="I3V-ih-1Ky" secondAttribute="bottom" constant="50" id="Kla-GN-gFJ"/>
                             <constraint firstItem="I3V-ih-1Ky" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="PNT-Wc-5LG"/>
@@ -161,7 +161,7 @@
                         <outlet property="buttonOne" destination="J1V-MS-ECi" id="nRV-ft-Qsv"/>
                         <outlet property="buttonThree" destination="I7L-k1-nh7" id="RzF-PM-Orp"/>
                         <outlet property="buttonTwo" destination="AS4-HX-g9f" id="ZkH-RG-nl7"/>
-                        <outlet property="nextQuestionButton" destination="W4J-qI-7Vs" id="zTt-nR-Afb"/>
+                        <outlet property="nextQuestionButton" destination="W4J-qI-7Vs" id="rEt-WX-MML"/>
                         <outlet property="playAgainButton" destination="K17-uy-MvB" id="0Bx-Cm-ye0"/>
                         <outlet property="questionField" destination="I3V-ih-1Ky" id="7UI-o2-ATi"/>
                     </connections>
