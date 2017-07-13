@@ -65,6 +65,7 @@ class ViewController: UIViewController {
             print ("The randomly chosen question has already been asked. Prepare to receive a new random question")
             nextRound()
         }
+        // Disable the NextQuestion button
         nextQuestionButton.isEnabled = false
         nextQuestionButton.alpha = 0.5
     }
@@ -72,11 +73,13 @@ class ViewController: UIViewController {
     
     
     func displayScore() {
+        //Hide Buttons
         buttonOne.isHidden = true
         buttonTwo.isHidden = true
         buttonThree.isHidden = true
         buttonFour.isHidden = true
         playAgainButton.isHidden = false
+        
         if quiz.correctQuestions < quiz.questionsPerRound {
             questionField.text = "You correctly answered \(quiz.correctQuestions) out of \(quiz.questionsPerRound), but there is still room for improvement!"
         } else if quiz.correctQuestions == quiz.questionsPerRound {
@@ -94,14 +97,17 @@ class ViewController: UIViewController {
             quiz.correctQuestions += 1
             questionField.text = "Great job, you got that one right!"
             sender.backgroundColor = correctAnswerColor
+            //Play CorrectAnswer Sound
             loadCorrectAnswerSound()
             playCorrectAnswerSound()
         } else {
             questionField.text = "I'm sorry but the correct answer is: \"\(correctAnswer)\""
             sender.backgroundColor = incorrectAnswerColor
+            //Play Incorrect Answer Sound
             loadWrongAnswerSound()
             playWrongAnswerSound()
         }
+        //Allow the user to go on to the next question
         nextQuestionButton.isEnabled = true
         nextQuestionButton.alpha = 1.0
     }
@@ -133,6 +139,7 @@ class ViewController: UIViewController {
         buttonFour.isHidden = false
         nextQuestionButton.isHidden = false
         playAgainButton.isHidden = true
+        
         quiz.questionsAsked = 0
         quiz.correctQuestions = 0
         displayQuestion()
@@ -140,7 +147,7 @@ class ViewController: UIViewController {
     
 
     
-    // MARK: Helper Methods
+    // MARK: Helper Sound Methods
    
     
     func loadGameStartSound() {

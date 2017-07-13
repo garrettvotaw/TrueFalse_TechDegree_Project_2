@@ -45,7 +45,7 @@ class Quiz {
     
     
     
-    //This function resets the has been asked property on all Questions in the array. (Call this when resetting the game)
+    //This function resets the "hasBeenAsked" property on all Questions in the array. (Call this when re-setting the game)
     func resetQuestions() {
         for question in questions {
             if question.hasBeenAsked {
