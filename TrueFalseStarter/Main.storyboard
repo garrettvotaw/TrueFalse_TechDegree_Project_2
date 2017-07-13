@@ -117,10 +117,32 @@
                                     <action selector="playAgain" destination="BYZ-38-t0r" eventType="touchUpInside" id="klz-B2-JAN"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W4J-qI-7Vs">
+                                <rect key="frame" x="36" y="446" width="248" height="48.5"/>
+                                <color key="backgroundColor" red="0.0023512751795351505" green="0.57437002658843994" blue="0.53079044818878174" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48.5" id="TPN-V7-n3N"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <state key="normal" title="NextQuestion">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="nextRound" destination="BYZ-38-t0r" eventType="touchUpInside" id="OeF-VP-0e9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="W4J-qI-7Vs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="0At-wo-hsG"/>
                             <constraint firstItem="K17-uy-MvB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1Af-RW-cf7"/>
+                            <constraint firstItem="W4J-qI-7Vs" firstAttribute="top" secondItem="45L-a8-LBd" secondAttribute="bottom" constant="28" id="AW3-q6-6UX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="W4J-qI-7Vs" secondAttribute="trailing" constant="20" id="IsS-GO-4Ct"/>
                             <constraint firstAttribute="trailingMargin" secondItem="K17-uy-MvB" secondAttribute="trailing" constant="20" id="JgN-qe-Haw"/>
                             <constraint firstItem="45L-a8-LBd" firstAttribute="top" secondItem="I3V-ih-1Ky" secondAttribute="bottom" constant="50" id="Kla-GN-gFJ"/>
                             <constraint firstItem="I3V-ih-1Ky" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="PNT-Wc-5LG"/>
@@ -129,6 +151,7 @@
                             <constraint firstItem="I3V-ih-1Ky" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="opU-M1-cVl"/>
                             <constraint firstItem="K17-uy-MvB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="pL6-S0-dx0"/>
                             <constraint firstItem="K17-uy-MvB" firstAttribute="top" secondItem="45L-a8-LBd" secondAttribute="bottom" constant="28" id="sdt-0T-ccF"/>
+                            <constraint firstItem="W4J-qI-7Vs" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tRl-JP-nVW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="45L-a8-LBd" secondAttribute="trailing" constant="20" id="vAP-9g-zeE"/>
                         </constraints>
                     </view>
@@ -138,6 +161,7 @@
                         <outlet property="buttonOne" destination="J1V-MS-ECi" id="nRV-ft-Qsv"/>
                         <outlet property="buttonThree" destination="I7L-k1-nh7" id="RzF-PM-Orp"/>
                         <outlet property="buttonTwo" destination="AS4-HX-g9f" id="ZkH-RG-nl7"/>
+                        <outlet property="nextQuestionButton" destination="W4J-qI-7Vs" id="zTt-nR-Afb"/>
                         <outlet property="playAgainButton" destination="K17-uy-MvB" id="0Bx-Cm-ye0"/>
                         <outlet property="questionField" destination="I3V-ih-1Ky" id="7UI-o2-ATi"/>
                     </connections>

@@ -12,6 +12,10 @@ import AudioToolbox
 
 class ViewController: UIViewController {
     
+    let buttonColorBlue = UIColor(colorLiteralRed: 16.0/255.0, green: 171.0/255.0, blue: 214.0/255.0, alpha: 1.0)
+    let correctAnswerColor = UIColor(colorLiteralRed: 93.0/255.0, green: 190.0/255.0, blue: 90.0/255.0, alpha: 1.0)
+    let incorrectAnswerColor = UIColor(colorLiteralRed: 221.0/255.0, green: 78.0/255.0, blue: 74.0/255.0, alpha: 1.0)
+    
     var indexOfSelectedQuestion: Int = 0
     var gameSound: SystemSoundID = 0
     var quiz = Quiz(questionsPerRound: 10, correctQuestions: 0, questionsAsked: 0)
@@ -23,6 +27,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var buttonTwo: UIButton!
     @IBOutlet weak var buttonThree: UIButton!
     @IBOutlet weak var buttonFour: UIButton!
+    @IBOutlet weak var nextQuestionButton: UIButton!
     
 
     override func viewDidLoad() {
@@ -56,9 +61,9 @@ class ViewController: UIViewController {
             print ("The randomly chosen question has already been asked. Prepare to receive a new random question")
             nextRound()
         }
-        
-        
     }
+    
+    
     
     func displayScore() {
         buttonOne.isHidden = true
@@ -70,30 +75,38 @@ class ViewController: UIViewController {
         questionField.text = "You correctly answered \(quiz.correctQuestions) out of \(quiz.questionsPerRound)"
     }
     
+    
+    
     @IBAction func checkAnswer(_ sender: UIButton) {
-        
         quiz.questionsAsked += 1
         let currentQuestion = quiz.questions[indexOfSelectedQuestion]
         let correctAnswer = currentQuestion.correctAnswer
-        
         if sender.title(for: .normal)! == correctAnswer {
             quiz.correctQuestions += 1
             questionField.text = "Great job, you got that one right!"
+            sender.backgroundColor = correctAnswerColor
         } else {
-            questionField.text = "NOPE!"
+            questionField.text = "I'm sorry but the answer was: \"\(correctAnswer)\""
+            sender.backgroundColor = incorrectAnswerColor
         }
-        loadNextRoundWithDelay(seconds: 2)
     }
     
-    func nextRound() {
+    
+    @IBAction func nextRound() {
+        buttonOne.backgroundColor = buttonColorBlue
+        buttonTwo.backgroundColor = buttonColorBlue
+        buttonThree.backgroundColor = buttonColorBlue
+        buttonFour.backgroundColor = buttonColorBlue
         if quiz.questionsAsked == quiz.questionsPerRound {
             // Game is over
             displayScore()
+            nextQuestionButton.isHidden = true
         } else {
             // Continue game
             displayQuestion()
         }
     }
+    
     
     @IBAction func playAgain() {
         // Set all the questions to be Askable again
@@ -103,6 +116,7 @@ class ViewController: UIViewController {
         buttonTwo.isHidden = false
         buttonThree.isHidden = false
         buttonFour.isHidden = false
+        nextQuestionButton.isHidden = false
         playAgainButton.isHidden = true
         quiz.questionsAsked = 0
         quiz.correctQuestions = 0
@@ -112,18 +126,7 @@ class ViewController: UIViewController {
 
     
     // MARK: Helper Methods
-    
-    func loadNextRoundWithDelay(seconds: Int) {
-        // Converts a delay in seconds to nanoseconds as signed 64 bit integer
-        let delay = Int64(NSEC_PER_SEC * UInt64(seconds))
-        // Calculates a time value to execute the method given current time and delay
-        let dispatchTime = DispatchTime.now() + Double(delay) / Double(NSEC_PER_SEC)
-        
-        // Executes the nextRound method at the dispatch time on the main queue
-        DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
-            self.nextRound()
-        }
-    }
+   
     
     func loadGameStartSound() {
         let pathToSoundFile = Bundle.main.path(forResource: "GameSound", ofType: "wav")
