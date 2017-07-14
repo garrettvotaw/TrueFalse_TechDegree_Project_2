@@ -21,9 +21,11 @@ class ViewController: UIViewController {
     var gameSound: SystemSoundID = 0
     var wrongAnswerSound: SystemSoundID = 1
     var correctAnswerSound: SystemSoundID = 2
-    var quiz = Quiz(questionsPerRound: 10, correctQuestions: 0, questionsAsked: 0)
+    var quiz = Quiz(questionsPerRound: 5, correctQuestions: 0, questionsAsked: 0)
+    var timer: Timer?
+    var timeLeft = 15
     
-    
+    @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var questionField: UILabel!
     @IBOutlet weak var playAgainButton: UIButton!
     @IBOutlet weak var buttonOne: UIButton!
@@ -46,9 +48,11 @@ class ViewController: UIViewController {
     
     
     func displayQuestion() {
+        enableButtons()
         indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: quiz.questions.count)
         let question = quiz.questions[indexOfSelectedQuestion]
         if question.hasBeenAsked == false {
+            startTimer()
             questionField.text = question.text
             buttonOne.setTitle(question.answer1, for: .normal)
             buttonTwo.setTitle(question.answer2, for: .normal)
@@ -68,6 +72,8 @@ class ViewController: UIViewController {
         // Disable the NextQuestion button
         nextQuestionButton.isEnabled = false
         nextQuestionButton.alpha = 0.5
+        
+       
     }
     
     
@@ -97,19 +103,24 @@ class ViewController: UIViewController {
             quiz.correctQuestions += 1
             questionField.text = "Great job, you got that one right!"
             sender.backgroundColor = correctAnswerColor
+            disableButtons()
+            resetTimer()
+            sender.alpha = 1
             //Play CorrectAnswer Sound
-            loadCorrectAnswerSound()
             playCorrectAnswerSound()
         } else {
             questionField.text = "I'm sorry but the correct answer is: \"\(correctAnswer)\""
             sender.backgroundColor = incorrectAnswerColor
+            disableButtons()
+            sender.alpha = 1
+            resetTimer()
             //Play Incorrect Answer Sound
-            loadWrongAnswerSound()
             playWrongAnswerSound()
         }
         //Allow the user to go on to the next question
         nextQuestionButton.isEnabled = true
         nextQuestionButton.alpha = 1.0
+    
     }
     
     
@@ -121,11 +132,13 @@ class ViewController: UIViewController {
         if quiz.questionsAsked == quiz.questionsPerRound {
             // Game is over
             displayScore()
+            timerLabel.isHidden = true
             nextQuestionButton.isHidden = true
         } else {
             // Continue game
             displayQuestion()
         }
+        
     }
     
     
@@ -143,12 +156,62 @@ class ViewController: UIViewController {
         quiz.questionsAsked = 0
         quiz.correctQuestions = 0
         displayQuestion()
+        resetTimer()
+        startTimer()
+        timerLabel.isHidden = false
     }
     
-
+    func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateLabel), userInfo: nil, repeats: true)
+    }
     
-    // MARK: Helper Sound Methods
-   
+    func updateLabel() {
+        timerLabel.text = "\(timeLeft)"
+        if timeLeft > 0 {
+            timeLeft -= 1
+        } else {
+            disableButtons()
+            quiz.questionsAsked += 1
+            quiz.questions[indexOfSelectedQuestion].hasBeenAsked = true
+            nextQuestionButton.isEnabled = true
+            nextQuestionButton.alpha = 1
+            questionField.text = "Sorry times up. The correct answer is \(quiz.questions[indexOfSelectedQuestion].correctAnswer)"
+            playWrongAnswerSound()
+            resetTimer()
+        }
+    }
+    
+    func resetTimer() {
+        timer?.invalidate()
+        timer = nil
+        timeLeft = 15
+    }
+    
+    
+    // MARK: Helper Methods
+    
+    func disableButtons() {
+        buttonOne.isEnabled = false
+        buttonOne.alpha = 0.5
+        buttonTwo.isEnabled = false
+        buttonTwo.alpha = 0.5
+        buttonThree.isEnabled = false
+        buttonThree.alpha = 0.5
+        buttonFour.isEnabled = false
+        buttonFour.alpha = 0.5
+    }
+    
+    func enableButtons() {
+        buttonOne.isEnabled = true
+        buttonOne.alpha = 1
+        buttonTwo.isEnabled = true
+        buttonTwo.alpha = 1
+        buttonThree.isEnabled = true
+        buttonThree.alpha = 1
+        buttonFour.isEnabled = true
+        buttonFour.alpha = 1
+        
+    }
     
     func loadGameStartSound() {
         let pathToSoundFile = Bundle.main.path(forResource: "GameSound", ofType: "wav")
@@ -169,10 +232,12 @@ class ViewController: UIViewController {
     }
     
     func playCorrectAnswerSound() {
+        loadCorrectAnswerSound()
         AudioServicesPlaySystemSound(correctAnswerSound)
     }
     
     func playWrongAnswerSound() {
+        loadWrongAnswerSound()
         AudioServicesPlaySystemSound(wrongAnswerSound)
     }
     
