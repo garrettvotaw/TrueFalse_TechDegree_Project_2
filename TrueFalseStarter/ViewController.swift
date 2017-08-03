@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     var gameSound: SystemSoundID = 0
     var wrongAnswerSound: SystemSoundID = 1
     var correctAnswerSound: SystemSoundID = 2
-    var quiz = Quiz(questionsPerRound: 5, correctQuestions: 0, questionsAsked: 0)
+    var quiz = Quiz(questionsPerRound: 8, correctQuestions: 0, questionsAsked: 0)
     var timer: Timer?
     var timeLeft = 15
     
@@ -42,6 +42,7 @@ class ViewController: UIViewController {
         playGameStartSound()
         displayQuestion()
         playAgainButton.isHidden = true
+        nextQuestionButton.isHidden = true
     }
 
     
@@ -49,10 +50,10 @@ class ViewController: UIViewController {
     
     func displayQuestion() {
         enableButtons()
+        startTimer()
         indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: quiz.questions.count)
         let question = quiz.questions[indexOfSelectedQuestion]
         if question.hasBeenAsked == false {
-            startTimer()
             questionField.text = question.text
             buttonOne.setTitle(question.answer1, for: .normal)
             buttonTwo.setTitle(question.answer2, for: .normal)
@@ -120,11 +121,13 @@ class ViewController: UIViewController {
         //Allow the user to go on to the next question
         nextQuestionButton.isEnabled = true
         nextQuestionButton.alpha = 1.0
+        nextQuestionButton.isHidden = false
     
     }
     
     
     @IBAction func nextRound() {
+        resetTimer()
         buttonOne.backgroundColor = buttonColorBlue
         buttonTwo.backgroundColor = buttonColorBlue
         buttonThree.backgroundColor = buttonColorBlue
@@ -137,6 +140,7 @@ class ViewController: UIViewController {
         } else {
             // Continue game
             displayQuestion()
+            nextQuestionButton.isHidden = true
         }
         
     }
